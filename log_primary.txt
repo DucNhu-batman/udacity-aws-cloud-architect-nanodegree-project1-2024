@@ -1,0 +1,91 @@
+Last login: Sun Jun 23 07:21:31 2024 from ec2-18-206-107-27.compute-1.amazonaws.com
+   ,     #_
+   ~\_  ####_        Amazon Linux 2
+  ~~  \_#####\
+  ~~     \###|       AL2 End of Life is 2025-06-30.
+  ~~       \#/ ___
+   ~~       V~' '->
+    ~~~         /    A newer version of Amazon Linux is available!
+      ~~._.   _/
+         _/ _/       Amazon Linux 2023, GA and supported until 2028-03-15.
+       _/m/'           https://aws.amazon.com/linux/amazon-linux-2023/
+
+No packages needed for security; 1 packages available
+Run "sudo yum update" to apply all updates.
+[ec2-user@ip-10-1-10-240 ~]$ sudo su -
+Last login: Sun Jun 23 07:27:46 UTC 2024 on pts/0
+[root@ip-10-1-10-240 ~]# yum install mysql
+Loaded plugins: extras_suggestions, langpacks, priorities, update-motd
+60 packages excluded due to repository priority protections
+Package mysql-community-client-8.0.37-1.el7.x86_64 already installed and latest version
+Nothing to do
+[root@ip-10-1-10-240 ~]# mysql -h database-primary.cpefyojoefwf.us-east-1.rds.amazonaws.com -P 3306 -u admin -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 881
+Server version: 8.0.35 Source distribution
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MySQL [udacity]> ^C
+
+MySQL [udacity]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| udacity            |
++--------------------+
+4 rows in set (0.02 sec)
+
+MySQL [udacity]> USE udacity;
+Database changed
+MySQL [udacity]> CREATE TABLE pet (name VARCHAR(20), owner VARCHAR(20),
+    ->        species VARCHAR(20), sex CHAR(1), birth DATE, death DATE);
+Query OK, 0 rows affected (0.10 sec)
+
+MySQL [udacity]> SHOW TABLES;
++-------------------+
+| Tables_in_udacity |
++-------------------+
+| pet               |
++-------------------+
+1 row in set (0.00 sec)
+
+MySQL [udacity]> DESCRIBE pet;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| name    | varchar(20) | YES  |     | NULL    |       |
+| owner   | varchar(20) | YES  |     | NULL    |       |
+| species | varchar(20) | YES  |     | NULL    |       |
+| sex     | char(1)     | YES  |     | NULL    |       |
+| birth   | date        | YES  |     | NULL    |       |
+| death   | date        | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+MySQL [udacity]> INSERT INTO pet
+    ->        VALUES ('Puffball','Diane','hamster','f','1999-03-30',NULL);
+Query OK, 1 row affected (0.01 sec)
+
+MySQL [udacity]> INSERT INTO pet
+    -> VALUES ('Mochi','Sukey','rabbit','f','1992-12-17',NULL);
+Query OK, 1 row affected (0.01 sec)
+
+MySQL [udacity]> SELECT * FROM pet;
++----------+-------+---------+------+------------+-------+
+| name     | owner | species | sex  | birth      | death |
++----------+-------+---------+------+------------+-------+
+| Puffball | Diane | hamster | f    | 1999-03-30 | NULL  |
+| Mochi    | Sukey | rabbit  | f    | 1992-12-17 | NULL  |
++----------+-------+---------+------+------------+-------+
+2 rows in set (0.00 sec)
